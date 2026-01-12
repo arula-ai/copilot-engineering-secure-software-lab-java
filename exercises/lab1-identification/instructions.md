@@ -23,10 +23,12 @@ Analyze these files in order of priority:
 | 4 | `vulnerable/api/ResourceController.java` | A01, A05, A10 |
 | 5 | `vulnerable/session/TokenManager.java` | A02, A08 |
 | 6 | `vulnerable/auth/PasswordHandler.java` | A02 |
-| 7 | `vulnerable/data/QueryBuilder.java` | A03 |
-| 8 | `vulnerable/data/FileHandler.java` | A01, A10 |
-| 9 | `vulnerable/api/UserApi.java` | A01, A03, A05 |
-| 10 | `pom.xml` | A06 |
+| 7 | `vulnerable/auth/SessionManager.java` | A02, A07 |
+| 8 | `vulnerable/data/QueryBuilder.java` | A03 |
+| 9 | `vulnerable/data/FileHandler.java` | A01, A08, A10 |
+| 10 | `vulnerable/api/UserApi.java` | A01, A03, A05, A09 |
+| 11 | `vulnerable/api/ModernApiHandler.java` | A01, A03, A10 (Java 17+) |
+| 12 | `pom.xml` | A06 |
 
 ---
 

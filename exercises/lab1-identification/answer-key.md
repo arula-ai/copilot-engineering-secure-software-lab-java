@@ -2,8 +2,8 @@
 
 ## Summary
 
-Total vulnerabilities documented: **27**
-Target for participants: **15+**
+Total vulnerabilities documented: **62**
+Target for participants: **25+**
 
 ---
 
@@ -61,18 +61,95 @@ Target for participants: **15+**
 
 | # | Line | OWASP | Severity | Vulnerability | Fix |
 |---|------|-------|----------|---------------|-----|
-| 23 | 20 | A02 | Critical | Hardcoded weak JWT secret ("secret") | Use env variable with strong secret |
-| 24 | 45-60 | A02 | High | JWT parsed without signature verification | Always verify signature |
-| 25 | 70-80 | A08 | High | 'none' algorithm token creation | Never allow 'none' algorithm |
+| 23 | 23 | A02 | Critical | Hardcoded weak JWT secret ("secret") | Use env variable with 256-bit+ key |
+| 24 | 75-105 | A02 | Critical | JWT parsed without signature verification | Always verify signature before using claims |
+| 25 | 111-121 | A08 | Critical | 'none' algorithm token creation | Never create/accept unsigned tokens |
 
 ---
 
-## Other Files (2 vulnerabilities)
+## PasswordHandler.java (2 vulnerabilities)
+
+| # | Line | OWASP | Severity | Vulnerability | Fix |
+|---|------|-------|----------|---------------|-----|
+| 26 | 25 | A02 | Critical | MD5 hashing - cryptographically broken | Use BCryptPasswordEncoder with cost 12+ |
+| 27 | 61-79 | A02 | High | Timing-unsafe password comparison | Use MessageDigest.isEqual() for constant-time |
+
+---
+
+## SessionManager.java (5 vulnerabilities)
+
+| # | Line | OWASP | Severity | Vulnerability | Fix |
+|---|------|-------|----------|---------------|-----|
+| 28 | 28-43 | A02 | High | Weak session token (UUID not crypto-secure) | Use SecureRandom for token generation |
+| 29 | 50-59 | A02 | Critical | Sequential predictable session IDs | Use cryptographically random tokens |
+| 30 | 64-75 | A07 | High | No session expiration check | Add timestamp validation and timeout |
+| 31 | 89-95 | A07 | Critical | Session fixation vulnerability | Regenerate session ID on login |
+| 32 | 113-116 | A05 | High | Debug endpoint exposes all sessions | Remove or protect debug endpoints |
+
+---
+
+## QueryBuilder.java (6 vulnerabilities)
+
+| # | Line | OWASP | Severity | Vulnerability | Fix |
+|---|------|-------|----------|---------------|-----|
+| 33 | 39-44 | A03 | Critical | SQL injection in WHERE clause | Use parameterized queries |
+| 34 | 49-53 | A03 | Critical | Raw SQL condition injection | Validate and sanitize input |
+| 35 | 58-62 | A03 | High | Unvalidated ORDER BY clause | Whitelist allowed columns |
+| 36 | 125-138 | A03 | Critical | SQL injection in INSERT | Use PreparedStatement |
+| 37 | 143-157 | A03 | Critical | SQL injection in UPDATE | Use PreparedStatement |
+| 38 | 170-173 | A03 | Critical | UNION injection vulnerability | Disallow UNION operations |
+
+---
+
+## FileHandler.java (7 vulnerabilities)
+
+| # | Line | OWASP | Severity | Vulnerability | Fix |
+|---|------|-------|----------|---------------|-----|
+| 39 | 27-34 | A01 | Critical | Path traversal in file read | Normalize and validate paths |
+| 40 | 39-44 | A01 | Critical | Path traversal in file write | Normalize and validate paths |
+| 41 | 49-57 | A08 | High | Incomplete extension blacklist | Use whitelist instead |
+| 42 | 77-101 | A10 | Critical | SSRF in URL fetching | Allowlist domains, block internal IPs |
+| 43 | 106-118 | A10 | Critical | SSRF with file:// protocol | Restrict to HTTPS only |
+| 44 | 123-132 | A01 | High | Directory listing exposure | Restrict directory access |
+| 45 | 156-173 | A01 | Critical | Zip slip vulnerability | Validate entry paths |
+
+---
+
+## UserApi.java (8 vulnerabilities)
+
+| # | Line | OWASP | Severity | Vulnerability | Fix |
+|---|------|-------|----------|---------------|-----|
+| 46 | 34-51 | A01 | Critical | List users without authentication | Require authentication |
+| 47 | 46 | A09 | Critical | Password exposed in API response | Never return passwords |
+| 48 | 56-74 | A01 | High | IDOR - access any user by ID | Add authorization check |
+| 49 | 102-129 | A01 | Critical | Mass assignment - role escalation | Whitelist allowed fields |
+| 50 | 134-147 | A01 | High | Delete without authorization | Require admin role |
+| 51 | 152-162 | A05 | Critical | Debug endpoint in production | Remove or restrict access |
+| 52 | 167-178 | A01 | Critical | Admin endpoint without auth | Require admin authentication |
+| 53 | 183-203 | A04 | High | Bulk create with default admin role | Validate roles, require auth |
+
+---
+
+## ModernApiHandler.java - Java 17+ Patterns (8 vulnerabilities)
+
+| # | Line | OWASP | Severity | Vulnerability | Fix |
+|---|------|-------|----------|---------------|-----|
+| 54 | 50-57 | A03 | Critical | SQL injection via text block + formatted() | Use PreparedStatement with parameters |
+| 55 | 72-102 | A10 | Critical | SSRF via Java HttpClient with auto-redirect | Allowlist domains, block internal IPs |
+| 56 | 109-137 | A10 | High | Async SSRF via CompletableFuture | Validate all URLs, rate limit |
+| 57 | 144-163 | A01 | High | Race condition with parallel streams | Use thread-safe collections |
+| 58 | 170-198 | A03 | Critical | Command injection via ProcessBuilder | Never execute user-provided commands |
+| 59 | 203-223 | A01 | Critical | Path traversal with Files API | Normalize and validate paths |
+| 60 | 257-272 | A09 | High | Record toString() exposes password | Override toString() to exclude sensitive data |
+| 61 | 308-331 | A01 | Medium | Stream resource leak + path traversal | Use try-with-resources |
+
+---
+
+## pom.xml (1 vulnerability)
 
 | # | File | OWASP | Severity | Vulnerability | Fix |
 |---|------|-------|----------|---------------|-----|
-| 26 | PasswordHandler.java:25 | A02 | Critical | MD5 hashing with timing-unsafe comparison | Use BCrypt with constant-time comparison |
-| 27 | pom.xml | A06 | Critical | log4j-core 2.14.1 (CVE-2021-44228 Log4Shell) | Upgrade to 2.17.1+ |
+| 62 | pom.xml:102 | A06 | Critical | log4j-core 2.14.1 (CVE-2021-44228 Log4Shell) | Upgrade to 2.17.1+ |
 
 ---
 
@@ -80,23 +157,26 @@ Target for participants: **15+**
 
 | Category | Count | Files |
 |----------|-------|-------|
-| A01: Access Control | 7 | AuthController, PaymentHandler, ResourceController, UserRepository |
-| A02: Cryptography | 5 | AuthController, PasswordHandler, TokenManager |
-| A03: Injection | 5 | UserRepository, QueryBuilder |
-| A04: Insecure Design | 1 | PaymentHandler |
-| A05: Misconfiguration | 1 | ResourceController |
+| A01: Access Control | 22 | AuthController, PaymentHandler, ResourceController, UserRepository, FileHandler, UserApi, ModernApiHandler |
+| A02: Cryptography | 8 | AuthController, PasswordHandler, TokenManager, SessionManager |
+| A03: Injection | 14 | UserRepository, QueryBuilder, ModernApiHandler |
+| A04: Insecure Design | 2 | PaymentHandler, UserApi |
+| A05: Misconfiguration | 3 | ResourceController, SessionManager, UserApi |
 | A06: Vulnerable Components | 1 | pom.xml |
-| A07: Authentication | 3 | AuthController |
-| A08: Integrity | 2 | PaymentHandler, TokenManager |
-| A09: Logging | 4 | AuthController, PaymentHandler |
-| A10: SSRF | 2 | ResourceController, UserRepository |
+| A07: Authentication | 5 | AuthController, SessionManager |
+| A08: Integrity | 3 | PaymentHandler, TokenManager, FileHandler |
+| A09: Logging | 6 | AuthController, PaymentHandler, UserApi, ModernApiHandler |
+| A10: SSRF | 6 | ResourceController, UserRepository, FileHandler, ModernApiHandler |
 
 ---
 
 ## Critical Vulnerabilities (Immediate Action Required)
 
-1. **SQL Injection** (UserRepository.java) - Database compromise
+1. **SQL Injection** (UserRepository.java, QueryBuilder.java) - Database compromise
 2. **Log4Shell** (pom.xml) - Remote code execution
 3. **Card Data Logging** (PaymentHandler.java) - PCI violation
-4. **SSRF** (ResourceController.java) - Internal network access
+4. **SSRF** (ResourceController.java, FileHandler.java, ModernApiHandler.java) - Internal network access
 5. **Weak JWT Secret** (TokenManager.java) - Authentication bypass
+6. **Session Fixation** (SessionManager.java) - Session hijacking
+7. **Path Traversal** (FileHandler.java, ModernApiHandler.java) - Arbitrary file access
+8. **Mass Assignment** (UserApi.java) - Privilege escalation

@@ -236,13 +236,13 @@ Review for SSRF vulnerabilities:
 
 | Code | Category | Copilot Detection | Lab Files |
 |------|----------|-------------------|-----------|
-| A01 | Access Control | High | auth-controller.ts, resource-controller.ts |
-| A02 | Cryptography | Medium | password-handler.ts, token-manager.ts |
-| A03 | Injection | High | user-repository.ts, query-builder.ts |
-| A04 | Insecure Design | Low | payment-handler.ts |
-| A05 | Misconfiguration | Medium | user-api.ts |
-| A06 | Components | Low | vulnerable-deps.ts |
-| A07 | Authentication | High | auth-controller.ts, session-manager.ts |
-| A08 | Integrity | Medium | token-manager.ts, payment-handler.ts |
-| A09 | Logging | High | auth-controller.ts, payment-handler.ts |
-| A10 | SSRF | Medium | resource-controller.ts, file-handler.ts |
+| A01 | Access Control | High | AuthController.java, ResourceController.java |
+| A02 | Cryptography | Medium | PasswordHandler.java, TokenManager.java |
+| A03 | Injection | High | UserRepository.java, QueryBuilder.java |
+| A04 | Insecure Design | Low | PaymentHandler.java |
+| A05 | Misconfiguration | Medium | UserApi.java, ResourceController.java |
+| A06 | Components | Low | pom.xml (log4j, jackson) |
+| A07 | Authentication | High | AuthController.java, SessionManager.java |
+| A08 | Integrity | Medium | TokenManager.java, PaymentHandler.java |
+| A09 | Logging | High | AuthController.java, PaymentHandler.java |
+| A10 | SSRF | Medium | ResourceController.java, UserRepository.java |

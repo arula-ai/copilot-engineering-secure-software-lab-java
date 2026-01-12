@@ -161,10 +161,10 @@ flowchart TD
 | Priority | Threat | Mitigation | Implementation | Owner |
 |----------|--------|------------|----------------|-------|
 | 1 | I1, I2 | Remove sensitive data from logs | Update logging config | DevOps |
-| 2 | T1 | Parameterized queries | Refactor user-repository.ts | Backend |
-| 3 | S2, D1 | Rate limiting | Add express-rate-limit | Backend |
-| 4 | E1, T2 | Field whitelisting | Update auth-controller.ts | Backend |
-| 5 | I5, E2 | Authorization middleware | Add authz checks | Backend |
+| 2 | T1 | Parameterized queries | Refactor UserRepository.java | Backend |
+| 3 | S2, D1 | Rate limiting | Add Spring rate limiting | Backend |
+| 4 | E1, T2 | Field whitelisting | Update AuthController.java | Backend |
+| 5 | I5, E2 | Authorization middleware | Add @PreAuthorize checks | Backend |
 | 6 | E4 | SSRF protection | URL allowlist | Backend |
 | 7 | S1 | Secure cookies | Add httpOnly, Secure, SameSite | Backend |
 | 8 | S3, E3 | JWT hardening | Algorithm validation | Backend |
@@ -177,15 +177,15 @@ flowchart TD
 
 | Control | Status | Location |
 |---------|--------|----------|
-| Password Hashing | ❌ Missing | auth-controller.ts |
+| Password Hashing | ❌ Missing | AuthController.java |
 | Rate Limiting | ❌ Missing | API layer |
 | Authorization | ❌ Missing | All controllers |
 | Input Validation | ❌ Missing | All endpoints |
-| Parameterized Queries | ❌ Missing | user-repository.ts |
-| Secure Sessions | ❌ Missing | session-manager.ts |
-| JWT Validation | ❌ Missing | token-manager.ts |
-| SSRF Protection | ❌ Missing | resource-controller.ts |
-| Webhook Signatures | ❌ Missing | payment-handler.ts |
+| Parameterized Queries | ❌ Missing | UserRepository.java |
+| Secure Sessions | ❌ Missing | SessionManager.java |
+| JWT Validation | ❌ Missing | TokenManager.java |
+| SSRF Protection | ❌ Missing | ResourceController.java |
+| Webhook Signatures | ❌ Missing | PaymentHandler.java |
 | Security Logging | ❌ Missing | All components |
 
 **Overall Risk Level: CRITICAL**

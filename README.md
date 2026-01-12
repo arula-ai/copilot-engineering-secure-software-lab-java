@@ -77,18 +77,18 @@ This repository contains **intentionally vulnerable code** for educational purpo
 ```
 copilot-secure-dev-lab-java/
 ├── src/main/java/com/securelabs/
-│   ├── vulnerable/              # Intentionally vulnerable code
-│   │   ├── auth/                # Authentication vulnerabilities
-│   │   ├── api/                 # API vulnerabilities
-│   │   ├── data/                # Injection vulnerabilities
-│   │   └── session/             # JWT/session vulnerabilities
-│   └── secure/                  # Reference implementations
-│       ├── auth/                # Secure auth patterns
-│       ├── api/                 # Secure API patterns
-│       └── data/                # Secure data patterns
+│   ├── vulnerable/              # Intentionally vulnerable code (12 files)
+│   │   ├── auth/                # AuthController, PasswordHandler, SessionManager
+│   │   ├── api/                 # PaymentHandler, ResourceController, UserApi, ModernApiHandler
+│   │   ├── data/                # UserRepository, QueryBuilder, FileHandler
+│   │   └── session/             # TokenManager
+│   └── secure/                  # Reference implementations (5 files)
+│       ├── auth/                # SecureAuthController
+│       ├── api/                 # SecurePaymentHandler, SecureResourceController, SecureModernApiHandler
+│       └── data/                # SecureUserRepository
 ├── src/test/java/               # Security verification tests
 ├── exercises/
-│   ├── lab1-identification/     # Vulnerability hunting
+│   ├── lab1-identification/     # Vulnerability hunting (62 documented vulnerabilities)
 │   ├── lab2-threat-model/       # STRIDE analysis
 │   └── lab3-implementation/     # Fixing vulnerabilities
 ├── threat-models/
@@ -105,16 +105,16 @@ copilot-secure-dev-lab-java/
 
 | Category | Vulnerable Files | Secure Reference |
 |----------|-----------------|------------------|
-| A01: Access Control | AuthController.java, ResourceController.java | secure/auth/, secure/api/ |
-| A02: Cryptography | PasswordHandler.java, TokenManager.java | secure/auth/, secure/session/ |
-| A03: Injection | UserRepository.java, QueryBuilder.java | secure/data/ |
-| A04: Insecure Design | PaymentHandler.java | secure/api/SecurePaymentHandler.java |
-| A05: Misconfiguration | UserApi.java, ResourceController.java | secure/api/ |
-| A06: Vulnerable Components | pom.xml (log4j, jackson) | mvn dependency-check |
-| A07: Authentication | AuthController.java, SessionManager.java | secure/auth/ |
-| A08: Integrity Failures | TokenManager.java, PaymentHandler.java | secure/session/, secure/api/ |
-| A09: Logging Failures | AuthController.java, PaymentHandler.java | secure/auth/, secure/api/ |
-| A10: SSRF | ResourceController.java, FileHandler.java | secure/api/, secure/data/ |
+| A01: Access Control | AuthController, ResourceController, FileHandler, UserApi, ModernApiHandler | secure/api/ |
+| A02: Cryptography | PasswordHandler, TokenManager, SessionManager | secure/auth/ |
+| A03: Injection | UserRepository, QueryBuilder, ModernApiHandler | secure/data/, secure/api/ |
+| A04: Insecure Design | PaymentHandler, UserApi | secure/api/SecurePaymentHandler |
+| A05: Misconfiguration | ResourceController, SessionManager, UserApi | secure/api/SecureResourceController |
+| A06: Vulnerable Components | pom.xml (log4j 2.14.1) | mvn dependency-check:check |
+| A07: Authentication | AuthController, SessionManager | secure/auth/ |
+| A08: Integrity Failures | TokenManager, PaymentHandler, FileHandler | secure/api/ |
+| A09: Logging Failures | AuthController, PaymentHandler, UserApi, ModernApiHandler | secure/api/ |
+| A10: SSRF | ResourceController, FileHandler, ModernApiHandler | secure/api/SecureResourceController |
 
 ---
 
