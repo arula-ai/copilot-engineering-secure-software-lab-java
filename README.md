@@ -19,7 +19,8 @@ This repository contains **intentionally vulnerable code** for educational purpo
 
 ## Copilot-Only Workflow
 
-**All lab work must be completed using GitHub Copilot.** This ensures you learn to leverage AI for security tasks.
+**All lab work must be completed using GitHub Copilot.
+** This ensures you learn to leverage AI for security tasks.
 
 ### How to Use Copilot in This Lab
 
