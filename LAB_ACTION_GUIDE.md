@@ -66,6 +66,7 @@ The `.github/instructions/java-security.instructions.md` file automatically appl
 ```
 Analyze all files in src/main/java/com/securelabs/vulnerable/
 and create an attack surface map identifying entry points and data flows.
+Save the output to outputs/lab1-attack-surface.md
 ```
 
 **Option B: Manual Approach**
@@ -75,15 +76,7 @@ and create an attack surface map identifying entry points and data flows.
 
 ### Phase 2: Deep Analysis (15 min)
 
-**Option A: Using the Find Vulnerabilities Prompt**
-```
-/find-vulnerabilities
-
-#file:src/main/java/com/securelabs/vulnerable/auth/AuthController.java
-```
-Repeat for each file in the vulnerable directory.
-
-**Option B: Using the Agent for Comprehensive Scan**
+**Option A: Using the Agent for Comprehensive Scan**
 1. Select **Security Vulnerability Hunter** from mode dropdown
 2. Type:
 ```
@@ -96,7 +89,17 @@ Perform a complete OWASP Top 10 security audit of:
 - ModernApiHandler.java
 
 Provide findings in a table format with OWASP category, severity, and line numbers.
+Save the output to outputs/lab1-vulnerabilities.md
 ```
+
+**Option B: Using the Find Vulnerabilities Prompt**
+```
+/find-vulnerabilities
+
+#file:src/main/java/com/securelabs/vulnerable/auth/AuthController.java
+Save the output to outputs/lab1-vulnerabilities.md
+```
+Repeat for each file in the vulnerable directory.
 
 **Option C: Manual Analysis**
 - For each vulnerable file, use this prompt pattern:
@@ -110,6 +113,7 @@ For each issue found:
 3. Line number(s)
 4. Attack scenario
 5. Recommended fix
+Save the output to outputs/lab1-vulnerabilities.md
 ```
 
 **Need Help with Categories?**
@@ -117,8 +121,8 @@ For each issue found:
 2. Ask: `What is the difference between A01 Broken Access Control and A07 Authentication Failures?`
 
 ### Phase 3: Documentation (5 min)
-- Copilot Chat: Generate a vulnerability summary table
-- Compare findings against `#file:exercises/lab1-identification/answer-key.md`
+- Open `outputs/lab1-vulnerabilities.md` and review your findings
+- Compare against `#file:exercises/lab1-identification/answer-key.md`
 - Target: Identify at least 40 of 62 documented vulnerabilities
 
 ## Lab 2 – Threat Modeling (25 min)
@@ -131,7 +135,8 @@ For each issue found:
 ```
 Create an architecture diagram for the Spring Boot payment system in this repository.
 Identify all components, data flows, and trust boundaries.
-Output as a Mermaid flowchart.
+Output as a Mermaid flowchart with a "# My Threat Model" heading.
+Save the output to threat-models/my-threat-model.md
 ```
 
 **Option B: Using the Generate Threat Model Prompt**
@@ -171,6 +176,8 @@ For each STRIDE category, identify at least 3 threats with:
 - Impact rating (Critical/High/Medium/Low)
 - Likelihood rating
 - Recommended mitigation
+Format as a markdown table with a "## STRIDE Analysis" heading.
+Append the output to threat-models/my-threat-model.md
 ```
 
 **Option B: Manual STRIDE Analysis**
@@ -204,10 +211,10 @@ Prioritize the identified threats by:
 3. Existing mitigations in the codebase
 
 Recommend the top 5 threats to address first.
+Add a "## Top 5 Priority Threats" heading and append to threat-models/my-threat-model.md
 ```
 
-- Save threat model to `threat-models/my-threat-model.md`
-- Compare against `#file:threat-models/examples/auth-payment-system-threat-model.md`
+Compare your model against the example: `#file:threat-models/examples/auth-payment-system-threat-model.md`
 
 ## Lab 3 – Secure Implementation (35 min)
 
@@ -260,8 +267,9 @@ Review my changes to AuthController.java.
 Verify all authentication vulnerabilities are properly fixed.
 ```
 
+- If issues remain: `/fix`
 - Apply changes using Copilot's "Apply in Editor"
-- Verify with: `#runInTerminal mvn compile`
+- Verify with: `#runInTerminal mvn clean compile`
 
 ### Task 2: Secure Payment Processing (10 min)
 
@@ -298,6 +306,10 @@ Check PaymentHandler.java for:
 - No sensitive data in logs
 ```
 
+- If issues remain: `/fix`
+- Apply changes using Copilot's "Apply in Editor"
+- Verify with: `#runInTerminal mvn clean compile`
+
 ### Task 3: Fix SQL Injection (8 min)
 
 **Option A: Using the Fix Vulnerability Prompt**
@@ -324,6 +336,19 @@ Convert all SQL queries to use PreparedStatement:
 Reference: #file:src/main/java/com/securelabs/secure/data/SecureUserRepository.java
 ```
 
+**Verify Your Fix:**
+1. Select **Secure Code Reviewer** from mode dropdown
+2. Ask:
+```
+Review my changes to UserRepository.java.
+Confirm: no string concatenation in SQL, PreparedStatement used throughout,
+command injection removed, path traversal protected.
+```
+
+- If issues remain: `/fix`
+- Apply changes using Copilot's "Apply in Editor"
+- Verify with: `#runInTerminal mvn clean compile`
+
 ### Task 4: Fix SSRF and Access Control (7 min)
 
 **Option A: Using the Fix Vulnerability Prompt**
@@ -349,6 +374,19 @@ Fix critical vulnerabilities:
 Reference: #file:src/main/java/com/securelabs/secure/api/SecureResourceController.java
 ```
 
+**Verify Your Fix:**
+1. Select **Secure Code Reviewer** from mode dropdown
+2. Ask:
+```
+Review my changes to ResourceController.java.
+Confirm: SSRF protection with URL allowlist, internal IP blocking,
+open redirect validation, and CORS restricted to specific origins.
+```
+
+- If issues remain: `/fix`
+- Apply changes using Copilot's "Apply in Editor"
+- Verify with: `#runInTerminal mvn clean compile`
+
 ### Task 5: Fix Java 17+ Vulnerabilities (Bonus)
 
 ```
@@ -367,6 +405,9 @@ Review ModernApiHandler.java for Java 17+ specific vulnerabilities:
 - Text block injection
 - Record toString() data exposure
 ```
+
+- Apply changes using Copilot's "Apply in Editor"
+- Verify with: `#runInTerminal mvn clean compile`
 
 ## Final Verification
 
@@ -387,6 +428,10 @@ For each file confirm:
 2. No new vulnerabilities introduced
 3. Code follows Spring Security best practices
 4. Proper error handling without information disclosure
+
+Compile the results into a markdown report with sections:
+Vulnerabilities Fixed, Remaining Issues, ASVS Gaps, and Build Status.
+Save the output to outputs/lab3-security-review.md
 ```
 
 **Verify Against OWASP Standards:**
@@ -409,15 +454,19 @@ Compare against the original 62 vulnerabilities - how many remain?
 
 | Category | Requirements | Verified |
 |----------|--------------|----------|
-| Lab 1 | Identified ≥40 of 62 vulnerabilities with OWASP categories | ☐ |
-| Lab 2 | Created STRIDE threat model with ≥12 threats | ☐ |
+| Lab 1 Findings | `outputs/lab1-attack-surface.md` saved | ☐ |
+| Lab 1 Findings | `outputs/lab1-vulnerabilities.md` saved with ≥40 of 62 vulnerabilities | ☐ |
+| Lab 2 Threat Model | `threat-models/my-threat-model.md` saved with architecture diagram | ☐ |
+| Lab 2 Threat Model | STRIDE analysis appended with ≥12 threats | ☐ |
+| Lab 2 Threat Model | Top 5 priority threats appended | ☐ |
 | Authentication | BCrypt, lockout, secure tokens implemented | ☐ |
 | Input Validation | Amount, currency, card validation added | ☐ |
 | Authorization | Ownership checks, role verification added | ☐ |
 | Injection | PreparedStatement, no string concatenation | ☐ |
 | SSRF | URL allowlist, internal IP blocking | ☐ |
 | Logging | No sensitive data in logs | ☐ |
-| Build | `mvn compile` passes | ☐ |
+| Lab 3 Report | `outputs/lab3-security-review.md` saved | ☐ |
+| Build | `mvn clean compile` passes | ☐ |
 | Tests | `mvn test` passes | ☐ |
 
 ## Copilot Prompt Patterns
@@ -450,12 +499,23 @@ Flag any violations with severity and recommended fix.
 
 ### Documentation
 
+**Your Deliverables (created during the lab):**
+
+| Deliverable | Location | Created In |
+|-------------|----------|------------|
+| Attack Surface Map | `outputs/lab1-attack-surface.md` | Lab 1 Phase 1 |
+| Vulnerability Findings | `outputs/lab1-vulnerabilities.md` | Lab 1 Phase 2 |
+| Threat Model | `threat-models/my-threat-model.md` | Lab 2 |
+| Security Review Report | `outputs/lab3-security-review.md` | Lab 3 Final |
+
+**Reference Materials:**
+
 | Resource | Location |
 |----------|----------|
 | OWASP Top 10 Reference | `docs/owasp-reference/top-10-summary.md` |
 | Security Checklist | `docs/checklists/security-review-checklist.md` |
 | STRIDE Template | `threat-models/templates/stride-template.md` |
-| Completed Threat Model | `threat-models/examples/auth-payment-system-threat-model.md` |
+| Example Threat Model | `threat-models/examples/auth-payment-system-threat-model.md` |
 | Lab 1 Answer Key | `exercises/lab1-identification/answer-key.md` |
 | Secure Implementations | `src/main/java/com/securelabs/secure/` |
 
