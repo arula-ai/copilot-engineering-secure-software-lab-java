@@ -6,11 +6,11 @@ Follow these lean steps using GitHub Copilot for all work. Each lab builds on th
 
 | Lab | Duration | Primary Actions | Copilot Tools |
 | --- | --- | --- | --- |
-| Setup | 5 min | `#runInTerminal mvn clean compile` | Terminal commands |
+| Setup | 5 min | `mvn clean compile` (run in terminal) | Terminal commands |
 | 1 | 30 min | Analyze `src/main/java/**/vulnerable/**` | Select **Security Vulnerability Hunter** mode, or use `/find-vulnerabilities` |
 | 2 | 25 min | STRIDE analysis, Mermaid architecture | Select **Threat Modeler** mode, or use `/generate-threat-model` |
 | 3 | 35 min | Refactor vulnerable code, run tests | Select **Secure Code Reviewer** mode, or use `/fix-vulnerability` |
-| Verify | 5 min | `#runInTerminal mvn clean package` | Select **OWASP Expert** mode for final review |
+| Verify | 5 min | `mvn clean package` (run in terminal) | Select **OWASP Expert** mode for final review |
 
 ## Copilot Customizations
 
@@ -50,8 +50,8 @@ The `.github/instructions/java-security.instructions.md` file automatically appl
 
 ## Setup – Environment Preparation
 
-- Copilot Chat: `#runInTerminal mvn clean compile`
-- Copilot Chat: `#runInTerminal mvn test`
+- Run `mvn clean compile` in your terminal
+- Run `mvn test` in your terminal
 - Verify no build errors before proceeding
 - Open `README.md` to review lab structure
 
@@ -269,7 +269,7 @@ Verify all authentication vulnerabilities are properly fixed.
 
 - If issues remain: `/fix`
 - Apply changes using Copilot's "Apply in Editor"
-- Verify with: `#runInTerminal mvn clean compile`
+- Run `mvn clean compile` in your terminal to verify
 
 ### Task 2: Secure Payment Processing (10 min)
 
@@ -308,7 +308,7 @@ Check PaymentHandler.java for:
 
 - If issues remain: `/fix`
 - Apply changes using Copilot's "Apply in Editor"
-- Verify with: `#runInTerminal mvn clean compile`
+- Run `mvn clean compile` in your terminal to verify
 
 ### Task 3: Fix SQL Injection (8 min)
 
@@ -347,7 +347,7 @@ command injection removed, path traversal protected.
 
 - If issues remain: `/fix`
 - Apply changes using Copilot's "Apply in Editor"
-- Verify with: `#runInTerminal mvn clean compile`
+- Run `mvn clean compile` in your terminal to verify
 
 ### Task 4: Fix SSRF and Access Control (7 min)
 
@@ -385,7 +385,7 @@ open redirect validation, and CORS restricted to specific origins.
 
 - If issues remain: `/fix`
 - Apply changes using Copilot's "Apply in Editor"
-- Verify with: `#runInTerminal mvn clean compile`
+- Run `mvn clean compile` in your terminal to verify
 
 ### Task 5: Fix Java 17+ Vulnerabilities (Bonus)
 
@@ -407,13 +407,13 @@ Review ModernApiHandler.java for Java 17+ specific vulnerabilities:
 ```
 
 - Apply changes using Copilot's "Apply in Editor"
-- Verify with: `#runInTerminal mvn clean compile`
+- Run `mvn clean compile` in your terminal to verify
 
 ## Final Verification
 
 ### Build Verification
-- Copilot Chat: `#runInTerminal mvn clean compile`
-- Copilot Chat: `#runInTerminal mvn test`
+- Run `mvn clean compile` in your terminal
+- Run `mvn test` in your terminal
 
 ### Security Review with Agents
 
@@ -538,8 +538,9 @@ For VS Code users with older Copilot versions, equivalent chatmodes are availabl
 
 ## Reminder
 
-- **All work via Copilot**: Use `#runInTerminal` for commands, `#file:` for context, `@workspace` for project-wide queries
+- **Use Copilot for meaningful tasks**: Security analysis, code generation, and review — not basic terminal commands
+- **Run build commands yourself**: `mvn clean compile`, `mvn test` should be typed directly in the terminal
 - **Select Agents from dropdown**: Click the mode selector in Copilot Chat to choose an agent
 - **Use Prompts with `/`**: Type `/prompt-name` to invoke custom prompts
-- **No manual typing**: Let Copilot generate all code and terminal commands
+- **Use `#file:` for context**: Add file references to your Copilot prompts for targeted analysis
 - **Verify suggestions**: Security is everyone's responsibility—review Copilot output before applying
