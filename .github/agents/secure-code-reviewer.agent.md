@@ -2,7 +2,7 @@
 name: Secure Code Reviewer
 description: Security-focused code reviewer that validates fixes and ensures secure implementation patterns
 tools: ['codebase', 'search', 'file', 'terminal', 'editFiles']
-model: claude-sonnet-4
+model: claude-sonnet-4.6
 ---
 
 # Secure Code Reviewer
