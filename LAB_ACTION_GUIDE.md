@@ -96,7 +96,13 @@ Save the output to outputs/lab1-vulnerabilities.md
 ```
 /find-vulnerabilities
 
-#file:src/main/java/com/securelabs/vulnerable/auth/AuthController.java
+#file:AuthController.java
+#file:PaymentHandler.java
+#file:UserRepository.java
+#file:ResourceController.java
+#file:TokenManager.java
+#file:ModernApiHandler.java
+
 Save the output to outputs/lab1-vulnerabilities.md
 ```
 Repeat for each file in the vulnerable directory.

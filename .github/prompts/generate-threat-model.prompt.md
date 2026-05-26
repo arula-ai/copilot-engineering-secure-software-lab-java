@@ -148,4 +148,6 @@ Use the template from `threat-models/templates/stride-template.md`:
 
 Reference the completed example at `threat-models/examples/auth-payment-system-threat-model.md` for guidance.
 
+Save the generated threat model to outputs/my-threat-model.md
+
 Generate the threat model now. Be thorough in identifying threats - assume an adversarial perspective.
